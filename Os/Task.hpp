@@ -6,7 +6,7 @@
 #define Os_Task_hpp_
 
 #include <FpConfig.hpp>
-#include <Fw/Time/Time.hpp>
+#include <Fw/Time/TimeInterval.hpp>
 #include <Fw/Types/Serializable.hpp>
 #include <Os/Os.hpp>
 #include <Os/TaskString.hpp>
@@ -112,7 +112,7 @@ namespace Os {
             //!
             //! \param interval: delay time
             //! \return status of the delay
-            static Status delay(Fw::Time interval);
+            static Status delay(Fw::TimeInterval interval);
 
             //! \brief provide a pointer to a task delegate object
             //!
@@ -133,7 +133,7 @@ namespace Os {
             //!
             //! \return result of placement new, must be equivalent to `aligned_placement_new_memory`
             //!
-            static TaskInterface* getDelegate(HandleStorage& aligned_placement_new_memory);
+            static TaskInterface* getDelegate(TaskHandleStorage& aligned_placement_new_memory);
 
             // =================
             // Implementation functions (instance) to be supplied by the Os::TaskInterface children
@@ -349,7 +349,7 @@ namespace Os {
         // opaque and thus normal allocation cannot be done. Instead, we allow the implementor to store then handle in
         // the byte-array here and set `handle` to that address for storage.
         //
-        alignas(FW_HANDLE_ALIGNMENT) HandleStorage m_handle_storage; //!< Storage for aligned FileHandle data
+        alignas(FW_HANDLE_ALIGNMENT) TaskHandleStorage m_handle_storage; //!< Storage for aligned FileHandle data
         TaskInterface& m_delegate; //!< Delegate for the real implementation
     };
 

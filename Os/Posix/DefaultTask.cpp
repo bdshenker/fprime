@@ -8,7 +8,7 @@
 #include "Os/Delegate.hpp"
 
 namespace Os {
-    Os::Task::Status TaskInterface::delay(Fw::Time interval) {
+    Os::Task::Status TaskInterface::delay(Fw::TimeInterval interval) {
         Os::Task::Status task_status = Os::Task::OP_OK;
         timespec sleep_interval;
         sleep_interval.tv_sec = interval.getSeconds();
@@ -38,7 +38,7 @@ namespace Os {
         return task_status;
     }
 
-    TaskInterface* TaskInterface::getDelegate(HandleStorage& aligned_new_memory) {
+    TaskInterface* TaskInterface::getDelegate(TaskHandleStorage& aligned_new_memory) {
         return Os::Delegate::makeDelegate<TaskInterface, Os::Posix::Task::PosixTask>(aligned_new_memory);
     }
 
